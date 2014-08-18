@@ -12,4 +12,15 @@
         <servlet-name>app</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+
+    <filter>
+        <filter-name>cors</filter-name>
+        <filter-class>koly.filter.CORSFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>cors</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
+
 </web-app>

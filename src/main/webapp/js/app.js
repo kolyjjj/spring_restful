@@ -11,10 +11,10 @@ angular.module('app', [])
             console.log('credential', vm.credential)
             $http.post('/api/login', vm.credential).then(
                 function(response){
-                    console.log('success', response);
+                    vm.data = response.data;
                 },
                 function(response){
-                    console.log('failed', response);
+                    vm.errorMessage = response.data.errorMessage;
                 }
             );
         };

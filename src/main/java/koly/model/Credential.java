@@ -4,6 +4,14 @@ public class Credential {
     private String username;
     private String token;
 
+    public Credential() {
+    }
+
+    public Credential(String username, String token) {
+        this.username = username;
+        this.token = token;
+    }
+
     public String getUsername() {
         return username;
     }
