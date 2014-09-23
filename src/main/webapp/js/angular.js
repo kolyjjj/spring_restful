@@ -4974,10 +4974,10 @@ function $CacheFactoryProvider() {
          *
          * @returns {object} an object with the following properties:
          *   <ul>
-         *     <li>**id**: the id of the cache instance</li>
-         *     <li>**size**: the number of entries kept in the cache instance</li>
-         *     <li>**...**: any additional properties from the options object when creating the
-         *       cache.</li>
+         *     <controller>**id**: the id of the cache instance</controller>
+         *     <controller>**size**: the number of entries kept in the cache instance</controller>
+         *     <controller>**...**: any additional properties from the options object when creating the
+         *       cache.</controller>
          *   </ul>
          */
         info: function() {
@@ -18565,11 +18565,11 @@ var ngClassDirective = classDirective('', true);
    <example>
      <file name="index.html">
         <ol ng-init="names=['John', 'Mary', 'Cate', 'Suz']">
-          <li ng-repeat="name in names">
+          <controller ng-repeat="name in names">
            <span ng-class-odd="'odd'" ng-class-even="'even'">
              {{name}}
            </span>
-          </li>
+          </controller>
         </ol>
      </file>
      <file name="style.css">
@@ -18613,11 +18613,11 @@ var ngClassOddDirective = classDirective('Odd', 0);
    <example>
      <file name="index.html">
         <ol ng-init="names=['John', 'Mary', 'Cate', 'Suz']">
-          <li ng-repeat="name in names">
+          <controller ng-repeat="name in names">
            <span ng-class-odd="'odd'" ng-class-even="'even'">
              {{name}} &nbsp; &nbsp; &nbsp;
            </span>
-          </li>
+          </controller>
         </ol>
      </file>
      <file name="style.css">
@@ -18764,7 +18764,7 @@ var ngCloakDirective = ngDirective({
  *      [ <a href="" ng-click="settings.greet()">greet</a> ]<br/>
  *      Contact:
  *      <ul>
- *        <li ng-repeat="contact in settings.contacts">
+ *        <controller ng-repeat="contact in settings.contacts">
  *          <select ng-model="contact.type">
  *             <option>phone</option>
  *             <option>email</option>
@@ -18772,8 +18772,8 @@ var ngCloakDirective = ngDirective({
  *          <input type="text" ng-model="contact.value"/>
  *          [ <a href="" ng-click="settings.clearContact(contact)">clear</a>
  *          | <a href="" ng-click="settings.removeContact(contact)">X</a> ]
- *        </li>
- *        <li>[ <a href="" ng-click="settings.addContact()">add</a> ]</li>
+ *        </controller>
+ *        <controller>[ <a href="" ng-click="settings.addContact()">add</a> ]</controller>
  *     </ul>
  *    </div>
  *   </file>
@@ -18847,7 +18847,7 @@ var ngCloakDirective = ngDirective({
  *     [ <a href="" ng-click="greet()">greet</a> ]<br/>
  *     Contact:
  *     <ul>
- *       <li ng-repeat="contact in contacts">
+ *       <controller ng-repeat="contact in contacts">
  *         <select ng-model="contact.type">
  *            <option>phone</option>
  *            <option>email</option>
@@ -18855,8 +18855,8 @@ var ngCloakDirective = ngDirective({
  *         <input type="text" ng-model="contact.value"/>
  *         [ <a href="" ng-click="clearContact(contact)">clear</a>
  *         | <a href="" ng-click="removeContact(contact)">X</a> ]
- *       </li>
- *       <li>[ <a href="" ng-click="addContact()">add</a> ]</li>
+ *       </controller>
+ *       <controller>[ <a href="" ng-click="addContact()">add</a> ]</controller>
  *    </ul>
  *   </div>
  *  </file>
@@ -20263,9 +20263,9 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
         I have {{friends.length}} friends. They are:
         <input type="search" ng-model="q" placeholder="filter friends..." />
         <ul class="example-animate-container">
-          <li class="animate-repeat" ng-repeat="friend in friends | filter:q">
+          <controller class="animate-repeat" ng-repeat="friend in friends | filter:q">
             [{{$index + 1}}] {{friend.name}} who is {{friend.age}} years old.
-          </li>
+          </controller>
         </ul>
       </div>
     </file>
@@ -21303,13 +21303,13 @@ var ngOptionsMinErr = minErr('ngOptions');
         </script>
         <div ng-controller="ExampleController">
           <ul>
-            <li ng-repeat="color in colors">
+            <controller ng-repeat="color in colors">
               Name: <input ng-model="color.name">
               [<a href ng-click="colors.splice($index, 1)">X</a>]
-            </li>
-            <li>
+            </controller>
+            <controller>
               [<a href ng-click="colors.push({})">add</a>]
-            </li>
+            </controller>
           </ul>
           <hr/>
           Color (null not allowed):

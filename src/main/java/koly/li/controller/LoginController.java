@@ -1,9 +1,8 @@
-package koly.li;
+package koly.li.controller;
 
-import koly.model.Credential;
-import koly.model.User;
+import koly.li.model.Credential;
+import koly.li.model.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

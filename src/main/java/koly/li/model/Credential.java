@@ -1,4 +1,4 @@
-package koly.model;
+package koly.li.model;
 
 public class Credential {
     private String username;
