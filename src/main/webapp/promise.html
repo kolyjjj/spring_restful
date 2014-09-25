@@ -8,7 +8,7 @@
 </head>
 <body>
 <script type="text/javascript">
-    var ajax = function(option, successHandler, failHandler){
+    var ajax = function (option, successHandler, failHandler) {
         $.ajax(option.url, {
             type: option.method || 'GET',
             success: successHandler,
@@ -16,50 +16,116 @@
         });
     };
 
-    var ajaxPromise = function(option){
+    var ajaxPromise = function (option) {
         var p = new Promise(function (resolve, reject) {
             ajax(option, resolve, reject);
         });
         return p;
     };
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         //using jquery ajax
-        ajax({url: 'api/id'}, function(successData){
-            ajax({url: 'api/creditnumber?id=' + successData.id},
-                    function(successData){
-                        ajax({url: 'api/credit?credit=' + successData.creditNumber},
-                        function(successData){
-                            console.log('user credit is: ' + successData.amount + ';' + successData.owner);
-                        },
-                        function(failData){
-                            console.log('get credit info failed...', failData);
+        (function (indication) {
+            console.log(indication);
+
+            ajax({url: 'api/id'}, function (successData) {
+                ajax({url: 'api/creditnumber?id=' + successData.id},
+                        function (successData) {
+                            ajax({url: 'api/credit?credit=' + successData.creditNumber},
+                                    function (successData) {
+                                        console.log('user credit is: ' + successData.amount + ';' + successData.owner);
+                                    },
+                                    function (failData) {
+                                        console.log('get credit info failed...', failData);
+                                    });
+                        }, function (failData) {
+                            console.log('get credit number failed...', failData);
                         });
-                    }, function(failData){
-                        console.log('get credit number failed...', failData);
+                console.log('successful', successData);
+            }, function (failData) {
+                console.log('get id failed...', failData);
+            });
+
+            var getId = function (successHandler, failedHandler) {
+                ajax({url: 'api/id'}, successHandler, failedHandler);
+            };
+
+            var getCreditNumber = function (userId, successHandler, failedHandler) {
+                ajax({url: 'api/creditnumber?id=' + userId}, successHandler, failedHandler);
+            };
+
+            var getCreditInfo = function (creditNumber, successHandler, failedHandler) {
+                ajax({url: 'api/credit?creditNumber=' + creditNumber}, successHandler, failedHandler);
+            };
+
+            getId(function (successData) {
+                getCreditNumber(successData.id, function (successData) {
+                    getCreditInfo(successData.creditNumber, function (successData) {
+                        console.log('user credit is: ' + successData.amount + ';' + successData.owner);
+                    }, function () {
+                        console.log('get credit info failed...', failData);
                     });
-            console.log('successful', successData);
-        }, function(failData){
-            console.log('get id failed...', failData);
-        });
+                }, function (failData) {
+                    console.log('get credit number failed...', failData);
+                });
+            }, function (failData) {
+                console.log('get id failed...', failData);
+            });
+
+        })('not promise running...');
+
 
         //using Q
-        ajaxPromise({url: 'api/id'})
-                .then(function(successData){
-                    return ajaxPromise({url: 'api/creditnumber?id=' + successData.id});
-                }, function(failData){
-                    console.log('Promise: get id failed...', failData);
-                })
-                .then(function(successData){
-                    return ajaxPromise({url: 'api/credit?credit=' + successData.creditNumber});
-                }, function(failData){
-                    console.log('Promise: get credit info failed...', failData);
-                })
-                .then(function(successData){
-                    console.log('Promise: user credit is: ' + successData.amount + ';' + successData.owner);
-                }, function(failData){
-                    console.log('Promise: get credit info failed...', failData);
-                });
+        (function (indication) {
+            var getId = function(){
+                return ajaxPromise({url: 'api/id'});
+            };
+
+            var getCreditNumber = function(id){
+                return ajaxPromise({url: 'api/creditnumber?id=' + id});
+            };
+
+            var getCreditInfo = function(creditNumber){
+                return ajaxPromise({url: 'api/credit?creditNumber=' + creditNumber});
+            };
+
+            getId()
+                    .then(function(successData){
+                        return getCreditNumber(successData.id);
+                    }, function(failData){
+                        console.log('Promise: get id failed...', failData);
+                    })
+                    .then(function(successData){
+                        return getCreditInfo(successData.creditNumber);
+                    }, function(failData){
+                        console.log('Promise: get credit number failed...', failData);
+                    })
+                    .then(function(successData){
+                        console.log('Promise: user credit is: ' + successData.amount + ';' + successData.owner);
+                    }, function(failData){
+                        console.log('Promise: get credit info failed...', failData);
+                    });
+
+
+            ajaxPromise({url: 'api/id'})
+                    .then(function (successData) {
+                        return ajaxPromise({url: 'api/creditnumber?id=' + successData.id});
+                    }, function (failData) {
+                        console.log('Promise: get id failed...', failData);
+                    })
+                    .then(function (successData) {
+                        return ajaxPromise({url: 'api/credit?credit=' + successData.creditNumber});
+                    }, function (failData) {
+                        console.log('Promise: get credit number failed...', failData);
+                    })
+                    .then(function (successData) {
+                        console.log('Promise: user credit is: ' + successData.amount + ';' + successData.owner);
+                    }, function (failData) {
+                        console.log('Promise: get credit info failed...', failData);
+                    });
+
+        })('promise running...');
+
     });
 </script>
 </body>
