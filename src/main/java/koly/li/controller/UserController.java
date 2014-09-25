@@ -34,6 +34,7 @@ public class UserController {
         Map<String, String> map = new HashMap<String, String>();
         map.put("amount", "50");
         map.put("owner", "koly");
-        return map;
+        throw new RuntimeException();
+//        return map;
     }
 }
