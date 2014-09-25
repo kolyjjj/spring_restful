@@ -16,7 +16,15 @@
         });
     };
 
+    var ajaxPromise = function(option){
+        var p = new Promise(function (resolve, reject) {
+            ajax(option, resolve, reject);
+        });
+        return p;
+    };
+
     $(document).ready(function(){
+        //using jquery ajax
         ajax({url: 'api/id'}, function(successData){
             ajax({url: 'api/creditnumber?id=' + successData.id},
                     function(successData){
@@ -34,6 +42,24 @@
         }, function(failData){
             console.log('get id failed...', failData);
         });
+
+        //using Q
+        ajaxPromise({url: 'api/id'})
+                .then(function(successData){
+                    return ajaxPromise({url: 'api/creditnumber?id=' + successData.id});
+                }, function(failData){
+                    console.log('Promise: get id failed...', failData);
+                })
+                .then(function(successData){
+                    return ajaxPromise({url: 'api/credit?credit=' + successData.creditNumber});
+                }, function(failData){
+                    console.log('Promise: get credit info failed...', failData);
+                })
+                .then(function(successData){
+                    console.log('Promise: user credit is: ' + successData.amount + ';' + successData.owner);
+                }, function(failData){
+                    console.log('Promise: get credit info failed...', failData);
+                });
     });
 </script>
 </body>
